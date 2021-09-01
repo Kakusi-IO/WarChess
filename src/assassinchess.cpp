@@ -1,6 +1,8 @@
 #include "assassinchess.h"
 
-AssassinChess::AssassinChess(QObject *parent) : Chess(parent)
-{
 
+AssassinChess::AssassinChess(Index index, QObject *parent) : Chess(parent)
+{
+    placeIndex=index;
+    pixmapPath=":/pixmap/res/quinn.png";
 }

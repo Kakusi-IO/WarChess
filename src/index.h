@@ -1,5 +1,5 @@
-#ifndef GLOBALDEFINATION_H
-#define GLOBALDEFINATION_H
+#ifndef INDEX_H
+#define INDEX_H
 
 //#include <map>
 //#include <string>
@@ -62,4 +62,4 @@ struct Index{
 
 //};
 
-#endif // GLOBALDEFINATION_H
+#endif // INDEX_H

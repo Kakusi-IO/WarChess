@@ -1,7 +1,7 @@
 #ifndef CHESS_H
 #define CHESS_H
 
-#include "globaldefination.h"
+#include "index.h"
 #include "includedLibs.h"
 #include <QObject>
 

@@ -4,6 +4,8 @@
 #include "includedLibs.h"
 #include "chess.h"
 #include "tankchess.h"
+#include "assassinchess.h"
+#include "archerchess.h"
 #include "gamecontroller.h"
 #include <QMainWindow>
 
@@ -19,7 +21,7 @@ class GameWindow : public QMainWindow
     friend class WindowController;
 
     GameController* gameController;
-    QLabel* chessInfo;
+    QLabel* hintLabel;
 
 public:
     explicit GameWindow(QWidget *parent = nullptr);

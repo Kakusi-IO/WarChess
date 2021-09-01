@@ -8,8 +8,8 @@ class AssassinChess : public Chess
 {
     Q_OBJECT
 public:
-    explicit AssassinChess(QObject *parent = nullptr);
-
+    //explicit AssassinChess(QObject *parent = nullptr);
+    AssassinChess(Index,QObject *parent=0);
 signals:
 
 };

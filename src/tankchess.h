@@ -2,7 +2,7 @@
 #define TANKCHESS_H
 
 #include "chess.h"
-#include "globaldefination.h"
+#include "index.h"
 #include <QObject>
 
 class TankChess : public Chess

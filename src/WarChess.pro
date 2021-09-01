@@ -26,8 +26,8 @@ HEADERS += \
     chess.h \
     gamecontroller.h \
     gamewindow.h \
-    globaldefination.h \
     includedLibs.h \
+    index.h \
     initwindow.h \
     tankchess.h \
     windowcontroller.h
