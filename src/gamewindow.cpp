@@ -10,6 +10,7 @@ GameWindow::GameWindow(QWidget *parent) :
 
     //初始化状态栏
     chessInfo=new QLabel(this);
+    gameController=new GameController(this);
     chessInfo->setText("按下左键以查看战棋信息");
     ui->statusbar->addWidget(chessInfo);
 }
@@ -44,10 +45,8 @@ void GameWindow::paintEvent(QPaintEvent *event)
         }
     }
 
-    //todo: 下面这段代码有问题，即使是调用了clear也不行
     //绘制棋子
-    gameController->blueTeamChesses.clear();
-    for(int i=0;i<gameController->blueTeamChesses.size();++i)
+    for(int i=0;i<gameController->blueTeamChesses.length();++i)
     {
         Chess* chess=gameController->blueTeamChesses[i];
         int x=100*chess->index().x+50;
@@ -66,7 +65,6 @@ void GameWindow::mousePressEvent(QMouseEvent *event)
         {
             Chess* newChess=new TankChess(mousePressIndex);
             gameController->addChess(newChess);
-//            emit newChessAdded();
             update();
         }
     }
