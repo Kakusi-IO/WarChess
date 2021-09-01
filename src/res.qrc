@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/pixmap">
+        <file>res/caitlyn.png</file>
+        <file>res/mundo.png</file>
+        <file>res/quinn.png</file>
+    </qresource>
+</RCC>

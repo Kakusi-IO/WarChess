@@ -9,11 +9,15 @@
 void WindowController::connectSignalsAndSlots()
 {
     connect(initWindow->ui->startBtn,SIGNAL(clicked()),gameWindow,SLOT(show()));
+    connect(gameWindow,SIGNAL(newChessAdded()),gameWindow,SLOT(on_newChessAdded()));
 }
 
 WindowController::WindowController()
 {
-
+    gameWindow=new GameWindow();
+    initWindow=new InitWindow();
+    connectSignalsAndSlots();
+    initWindow->show();
 }
 
 WindowController::~WindowController()

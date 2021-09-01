@@ -3,16 +3,16 @@
 
 #include "initwindow.h"
 #include "gamewindow.h"
+#include "gamecontroller.h"
 #include <QMainWindow>
 #include <QObject>
 
 class WindowController : public QObject
 {
     Q_OBJECT
-
-public:
     InitWindow* initWindow;
     GameWindow* gameWindow;
+
 
 public:
     WindowController();
