@@ -32,20 +32,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="fileStartBtn">
-       <property name="text">
-        <string>读取存档</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="settingsBtn">
-       <property name="text">
-        <string>设置</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="exitBtn">
        <property name="text">
         <string>退出</string>
@@ -54,22 +40,6 @@
      </item>
     </layout>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuWelcome">
-    <property name="title">
-     <string>Welcome</string>
-    </property>
-   </widget>
-   <addaction name="menuWelcome"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
@@ -84,6 +54,22 @@
     <hint type="sourcelabel">
      <x>669</x>
      <y>370</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>exitBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>InitWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>669</x>
+     <y>491</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>

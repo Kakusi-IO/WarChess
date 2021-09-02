@@ -27,6 +27,7 @@ void Chess::beAttacked(int damage)
 
 void Chess::death()
 {
+    placeIndex=Index(-100,-100);
     alive=false;
 }
 

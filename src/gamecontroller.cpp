@@ -56,15 +56,31 @@ bool GameController::hasEnemyToAttack() const
     foreach(tempChess,redTeamChesses)
     {
         distances<<currentChess->distanceTo(*tempChess);
+        if(currentChess->attackDistance+0.01 > currentChess->distanceTo(*tempChess))
+        {
+            return true;
+        }
     }
-    double minDistance=*(std::min(distances.begin(),distances.end()));
-    return minDistance < currentChess->attackDistance+0.1;
+    return false;
+}
+
+bool GameController::hasEnemyToAutoAttack() const
+{
+    QList<double> distances;
+    Chess *tempChess;
+    foreach(tempChess,blueTeamChesses)
+    {
+        distances<<currentChess->distanceTo(*tempChess);
+        if(currentChess->attackDistance+0.01 > currentChess->distanceTo(*tempChess))
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 void GameController::moveChess(int key)
 {
-
-
     Index indexAfterMove=Index::moveTo(currentChess->placeIndex,key);
     //不能出边界
     if(!indexAfterMove.isValid())
@@ -103,10 +119,165 @@ void GameController::actAttack(Chess *lhs, Chess *rhs)
 
     int damage=lhs->attack();
     rhs->beAttacked(damage);
+    qDebug()<<lhs->chessName()<<" 攻击了 "<<rhs->chessName();
     if(!rhs->alive)
     {
         emit someoneDead();
     }
+}
+
+void GameController::autoMoveChess()
+{
+    if(hasEnemyToAutoAttack())
+    {
+        qDebug()<<currentChess->chessName()<<" "<<"有自动攻击的目标,无需移动";
+//        moved=true;//跳过移动
+        return;
+    }
+    qDebug()<<currentChess->chessName()<<" "<<"没有自动攻击的目标";
+     //靠近最近的敌人
+    Chess *goalChess=findTheNearestEnemy();
+    int deltaX=goalChess->index().x-currentChess->index().x;
+    int deltaY=goalChess->index().y-currentChess->index().y;
+    //优先度：deltax, deltay, -deltax, -deltay
+    Index currentIndex=currentChess->index();
+    if(signum(deltaX)!=0)
+    {
+        if(canBeMovedTo(Index(currentIndex.x+signum(deltaX),currentIndex.y))) //可以x方向靠近
+        {
+            qDebug()<<"x靠近";
+            if(deltaX>0)
+            {
+                currentChess->move(Qt::Key_D);
+            }
+            else
+            {
+                currentChess->move(Qt::Key_A);
+            }
+//            moved=true;
+            return;
+        }
+    }
+    if(signum(deltaY)!=0)
+    {
+        if(canBeMovedTo(Index(currentIndex.x,currentIndex.y+signum(deltaY)))) //可以y方向靠近
+        {
+            if(deltaY>0)
+            {
+                currentChess->move(Qt::Key_S);
+            }
+            else
+            {
+                currentChess->move(Qt::Key_W);
+            }
+//            moved=true;
+            qDebug()<<"y靠近";
+            return;
+        }
+    }
+    if(signum(deltaX)!=0)
+    {
+        if(canBeMovedTo(Index(currentIndex.x-signum(deltaX),currentIndex.y))) //可以x方向远离
+        {
+            if(deltaX>0)
+            {
+                currentChess->move(Qt::Key_A);
+            }
+            else
+            {
+                currentChess->move(Qt::Key_D);
+            }
+//            moved=true;
+            qDebug()<<"x远离";
+            return;
+        }
+    }
+    if(signum(deltaY)!=0)
+    {
+        if(canBeMovedTo(Index(currentIndex.x,currentIndex.y-signum(deltaY)))) //可以x方向远离
+        {
+            if(deltaY>0)
+            {
+                currentChess->move(Qt::Key_W);
+            }
+            else
+            {
+                currentChess->move(Qt::Key_S);
+            }
+//            moved=true;
+            qDebug()<<"y远离";
+            return;
+        }
+    }
+}
+
+void GameController::autoAttack()
+{
+    if(hasEnemyToAutoAttack())
+    {
+//        attackActed=true;
+        Chess *targetChess=findTheNearestEnemy();
+        actAttack(currentChess,targetChess);
+    }
+}
+
+Chess* GameController::findTheNearestEnemy()
+{
+    Chess *returnChess, *tempChess;
+    int minDistance=10000;
+    foreach(tempChess,blueTeamChesses)
+    {
+        if(currentChess->distanceTo(*tempChess) < minDistance)
+        {
+            minDistance=currentChess->distanceTo(*tempChess);
+            returnChess=tempChess;
+        }
+    }
+    return returnChess;
+}
+
+bool GameController::canBeMovedTo(Index indexAfterMove)
+{
+    //不能出边界
+    if(!indexAfterMove.isValid())
+    {
+        return false;
+    }
+    //不能撞墙
+    if(colorsOfMaps[currentStage][5*indexAfterMove.y+indexAfterMove.x]==Qt::black)
+    {
+        return false;
+    }
+    //不能撞人
+    Chess *tempChess;
+    foreach(tempChess,blueTeamChesses)
+    {
+        if(tempChess->index()==indexAfterMove)
+        {
+            return false;
+        }
+    }
+    foreach(tempChess,redTeamChesses)
+    {
+        if(tempChess->index()==indexAfterMove)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+int GameController::signum(int x)
+{
+    if(x>0)
+    {
+        return 1;
+    }
+    if(x<0)
+    {
+        return -1;
+    }
+    return 0;
 }
 
 

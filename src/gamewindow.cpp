@@ -27,6 +27,7 @@ GameWindow::GameWindow(QWidget *parent) :
 
     //初始化状态栏
     statusLabel=new QLabel(this);
+    statusLabel->setMinimumWidth(300);
     gameController=new GameController(this);
     setStatusLabel("按下右键以放置 祖安狂人");
     ui->statusbar->addWidget(statusLabel);
@@ -103,7 +104,7 @@ void GameWindow::mousePressEvent(QMouseEvent *event)
         }
 
         //放置棋子
-        if(!mousePressIndex.isValid() //位置超出地图
+        if(!mousePressIndex.isValidForBlueTeam() //位置超出蓝色半区地图
                 ||gameController->chessesHasSetted == gameController->chessesPerStage[gameController->currentStage] //放置完毕
                 ||gameController->colorsOfMaps[gameController->currentStage][5*mousePressIndex.y+mousePressIndex.x] == Qt::black //位置在阻挡地形上
                 )
@@ -148,6 +149,10 @@ void GameWindow::mousePressEvent(QMouseEvent *event)
     //攻击
     if(event->button()==Qt::LeftButton)
     {
+        if(gameController->attackActed)
+        {
+            return; //非攻击回合
+        }
         foreach(chess,gameController->redTeamChesses)
         {
             if(chess->index()==mousePressIndex)
@@ -168,6 +173,10 @@ void GameWindow::mousePressEvent(QMouseEvent *event)
 
 void GameWindow::keyPressEvent(QKeyEvent *event)
 {
+    if(gameController->moved)
+    {
+        return; //非移动回合
+    }
     if(event->key()==Qt::Key_P)
     {
         //pass
@@ -189,6 +198,10 @@ void GameWindow::gameStart()
         //蓝色方
         foreach(gameController->currentChess,gameController->blueTeamChesses)
         {
+            if(!gameController->currentChess->alive)
+            {
+                continue;
+            }
             //移动
             //qDebug()<<"进入第一个foreach";
             setStatusLabel("请移动 "+gameController->currentChess->chessName());
@@ -211,8 +224,8 @@ void GameWindow::gameStart()
                 while(!gameController->moved);
             }
 
-            qDebug()<<gameController->currentChess->chessName()<<" "
-            <<gameController->currentChess->placeIndex.x<<" "<<gameController->currentChess->placeIndex.y;
+//            qDebug()<<gameController->currentChess->chessName()<<" "
+//            <<gameController->currentChess->placeIndex.x<<" "<<gameController->currentChess->placeIndex.y;
             //攻击
             //走到了黄色地形，不能攻击
             if(gameController->colorsOfMaps
@@ -242,6 +255,42 @@ void GameWindow::gameStart()
             }
             while(!gameController->attackActed);
 
+        }
+
+        //红色方
+        foreach(gameController->currentChess,gameController->redTeamChesses)
+        {
+            if(!gameController->currentChess->alive)
+            {
+                continue;
+            }
+            setStatusLabel("敌方回合");
+            wait(2000);
+            //移动
+            setStatusLabel(gameController->currentChess->chessName()+" 正在移动");
+            wait(2000);
+            gameController->autoMoveChess();
+            update();
+            if(gameController->currentChess->metaObject()->className()==QString("AssassinChess"))
+            {
+                gameController->autoMoveChess();
+                update();
+            }
+
+            //攻击
+            if(gameController->colorsOfMaps
+                    [gameController->currentStage]
+                    [gameController->currentChess->index().x+gameController->currentChess->index().y*5] == Qt::yellow
+                    )
+            {
+                setStatusLabel(gameController->currentChess->chessName()+" 移动到了黄色区域，此回合不能攻击");
+                wait(2000);
+                continue;
+            }
+            setStatusLabel(gameController->currentChess->chessName()+" 正在攻击");
+            wait(2000);
+            gameController->autoAttack();
+//            update();
         }
     }
     if(gameController->hasWon())

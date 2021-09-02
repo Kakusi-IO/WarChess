@@ -20,11 +20,23 @@ class GameController : public QObject
     int currentStage=0; //当前的关卡数，取值为0或1
     int chessesHasSetted=0;
     Chess *currentChess;
-    bool moved=false;
-    bool attackActed=false;
+    bool moved=true;
+    bool attackActed=true;
 
     void moveChess(int);
     void actAttack(Chess*,Chess*);
+
+    //判断当前蓝色方棋子射程内是否有攻击目标
+    bool hasEnemyToAttack() const;
+
+    //用于自动移动、攻击
+    bool hasEnemyToAutoAttack() const;
+    void autoMoveChess(); //移动红色方的currentChess
+    void autoAttack();//currentChess发动攻击
+    Chess* findTheNearestEnemy();
+    bool canBeMovedTo(Index);
+    int signum(int);
+
 public:
     explicit GameController(QObject *parent = nullptr);
     void addChess(Chess*);
@@ -51,11 +63,15 @@ public:
     bool hasWon() const;
     bool hasLost() const;
 
-    //判断当前棋子射程内是否有攻击目标
-    bool hasEnemyToAttack() const;
+    //判断当前蓝色方棋子射程内是否有攻击目标
+
+
+
+
 
 signals:
     void someoneDead();
+
 public slots:
 
 };

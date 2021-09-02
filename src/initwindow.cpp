@@ -13,3 +13,10 @@ InitWindow::~InitWindow()
     delete ui;
 }
 
+void InitWindow::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
+    QPainter painter(this);
+    painter.drawPixmap(0,0,800,600,QPixmap(":/pixmap/res/Classic_Garen_Splash.jpg"));
+}
+

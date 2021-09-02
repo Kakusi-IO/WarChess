@@ -2,6 +2,9 @@
 #define INITWINDOW_H
 
 #include <QMainWindow>
+#include <QPainter>
+#include <QPaintEvent>
+#include <QPixmap>
 
 class WindowController;
 
@@ -17,7 +20,8 @@ class InitWindow : public QMainWindow
 public:
     InitWindow(QWidget *parent = nullptr);
     ~InitWindow();
-
+protected:
+    void paintEvent(QPaintEvent* event);
 private:
     Ui::InitWindow *ui;
     friend class WindowController;

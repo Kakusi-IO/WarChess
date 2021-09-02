@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <QPoint>
+#include <QDebug>
 
 struct Index{
     int x;
@@ -35,9 +36,25 @@ struct Index{
     }
     Index()=default;
     Index(int x_,int y_): x(x_),y(y_) {}
-    bool isValid()
+
+    //棋子在地图内
+    bool isValid() const
     {
         if(x<0||x>4||y<0||y>4)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    //棋子在蓝色半区
+    bool isValidForBlueTeam() const
+    {
+        if(!isValid())
+        {
+            return false;
+        }
+        if(y<=x)
         {
             return false;
         }
@@ -50,6 +67,7 @@ struct Index{
     static double distance(const Index& lhs,const Index& rhs)
     {
         double squareOfDistance=(lhs.x-rhs.x)*(lhs.x-rhs.x)+(lhs.y-rhs.y)*(lhs.y-rhs.y);
+        qDebug()<<sqrt(squareOfDistance);
         return sqrt(squareOfDistance);
     }
 };
