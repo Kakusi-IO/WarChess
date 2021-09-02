@@ -27,7 +27,7 @@
      <item>
       <widget class="QPushButton" name="startBtn">
        <property name="text">
-        <string>新游戏</string>
+        <string>开始游戏</string>
        </property>
       </widget>
      </item>
