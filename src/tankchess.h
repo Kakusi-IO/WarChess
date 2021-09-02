@@ -12,7 +12,7 @@ public:
 //    explicit TankChess(QObject *parent = nullptr);
     TankChess(Index,QObject *parent=0);
     void beAttacked(int) override;
-
+    QString chessName() const override;
 signals:
 
 };

@@ -10,6 +10,7 @@ class AssassinChess : public Chess
 public:
     //explicit AssassinChess(QObject *parent = nullptr);
     AssassinChess(Index,QObject *parent=0);
+    QString chessName() const override;
 signals:
 
 };

@@ -2,6 +2,11 @@
 #define GAMECONTROLLER_H
 
 #include "chess.h"
+#include "tankchess.h"
+#include "assassinchess.h"
+#include "archerchess.h"
+#include "includedLibs.h"
+
 #include <QObject>
 #include <QList>
 
@@ -14,10 +19,16 @@ class GameController : public QObject
     QList<Chess*>redTeamChesses;
     int currentStage=0; //当前的关卡数，取值为0或1
     int chessesHasSetted=0;
+    Chess *currentChess;
+    bool moved=false;
+    bool attackActed=false;
+
+    void moveChess(int);
+    void actAttack(Chess*,Chess*);
 public:
     explicit GameController(QObject *parent = nullptr);
     void addChess(Chess*);
-    QColor colorsOfMap[2][25]=
+    QColor colorsOfMaps[2][25]=
     {
         //第一关的地图
         {
@@ -37,7 +48,15 @@ public:
         }
     };
     int chessesPerStage[2]={3,4}; //第一关三个棋子，第二关四个棋子，可多放一个射手
+    bool hasWon() const;
+    bool hasLost() const;
+
+    //判断当前棋子射程内是否有攻击目标
+    bool hasEnemyToAttack() const;
+
 signals:
+    void someoneDead();
+public slots:
 
 };
 

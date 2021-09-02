@@ -25,7 +25,11 @@ public:
     virtual void beAttacked(int);
     virtual void death();
     Index index() const;
+    QString info() const;
+    void move(int);
+    double distanceTo(const Chess& rhs) const;
 
+    virtual QString chessName() const;
 
 signals:
 

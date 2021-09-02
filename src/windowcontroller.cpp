@@ -9,7 +9,8 @@
 void WindowController::connectSignalsAndSlots()
 {
     connect(initWindow->ui->startBtn,SIGNAL(clicked()),gameWindow,SLOT(show()));
-    connect(gameWindow,SIGNAL(newChessAdded()),gameWindow,SLOT(on_newChessAdded()));
+    connect(gameWindow,SIGNAL(newChessAdded()),gameWindow,SLOT(callUpdate()));
+    connect(gameWindow->gameController,SIGNAL(someoneDead()),gameWindow,SLOT(callUpdate()));
 }
 
 WindowController::WindowController()

@@ -21,22 +21,35 @@ class GameWindow : public QMainWindow
     friend class WindowController;
 
     GameController* gameController;
-    QLabel* hintLabel;
+    QLabel* statusLabel;
 
+    void setStatusLabel(const QString&);
+    void setInfoLabel(const QString&);
+    void keyPressed(int);
+    void wait(unsigned int msec)
+    {
+        QTime _Timer = QTime::currentTime().addMSecs(msec);
+        while( QTime::currentTime() < _Timer )
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+    }
 public:
     explicit GameWindow(QWidget *parent = nullptr);
     ~GameWindow();
+    void gameStart();
 protected:
     void paintEvent(QPaintEvent* event);
     void mousePressEvent(QMouseEvent *event);
-
+    void keyPressEvent(QKeyEvent *event);
 private:
 
     Ui::GameWindow *ui;
+
 signals:
+
     void newChessAdded();
+
 public slots:
-    void on_newChessAdded();
+    void callUpdate();
 };
 
 #endif // GAMEWINDOW_H

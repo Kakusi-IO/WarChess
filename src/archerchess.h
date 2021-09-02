@@ -10,6 +10,7 @@ class ArcherChess : public Chess
 public:
     //explicit ArcherChess(QObject *parent = nullptr);
     ArcherChess(Index,QObject* parent=nullptr);
+    QString chessName() const override;
 signals:
 
 };
