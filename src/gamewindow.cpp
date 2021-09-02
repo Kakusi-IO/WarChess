@@ -196,7 +196,7 @@ void GameWindow::gameStart()
             //走一步
             do
             {
-                wait(500);
+                wait(100);
             }
             while(!gameController->moved);
 
@@ -206,7 +206,7 @@ void GameWindow::gameStart()
                 gameController->moved=false;
                 do
                 {
-                    wait(500);
+                    wait(100);
                 }
                 while(!gameController->moved);
             }
@@ -238,7 +238,7 @@ void GameWindow::gameStart()
             do
             {
 
-                wait(500);
+                wait(100);
             }
             while(!gameController->attackActed);
 

@@ -3,5 +3,8 @@
         <file>res/caitlyn.png</file>
         <file>res/mundo.png</file>
         <file>res/quinn.png</file>
+        <file>res/caitlyn_enemy.png</file>
+        <file>res/mundo_enemy.png</file>
+        <file>res/quinn_enemy.png</file>
     </qresource>
 </RCC>

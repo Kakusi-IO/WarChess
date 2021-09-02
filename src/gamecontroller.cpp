@@ -7,13 +7,13 @@ GameController::GameController(QObject *parent) : QObject(parent)
 
     //敌方棋子
     Chess *newTankChess,*newAssassinChess,*newArcherChess;
-    newTankChess=new TankChess(Index(3,2));
+    newTankChess=new TankChess(Index(3,2),true);
     redTeamChesses<<newTankChess;
 
-    newAssassinChess=new AssassinChess(Index(3,0));
+    newAssassinChess=new AssassinChess(Index(3,0),true);
     redTeamChesses<<newAssassinChess;
 
-    newArcherChess=new ArcherChess(Index(4,0));
+    newArcherChess=new ArcherChess(Index(4,0),true);
     redTeamChesses<<newArcherChess;
 
 }

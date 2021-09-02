@@ -13,6 +13,19 @@ TankChess::TankChess(Index index,QObject *parent) : Chess(parent)
     pixmapPath=":/pixmap/res/mundo.png";
 }
 
+TankChess::TankChess(Index index, bool isEnemy, QObject *parent): Chess(parent)
+{
+    Q_UNUSED(isEnemy);
+    placeIndex=index;
+
+    hitPoint=1200;
+    attackValue=50;
+    stepLength=1;
+    attackDistance=1;
+
+    pixmapPath=":/pixmap/res/mundo_enemy.png";
+}
+
 
 void TankChess::beAttacked(int damage)
 {

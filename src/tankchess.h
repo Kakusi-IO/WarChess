@@ -11,6 +11,7 @@ class TankChess : public Chess
 public:
 //    explicit TankChess(QObject *parent = nullptr);
     TankChess(Index,QObject *parent=0);
+    TankChess(Index,bool,QObject *parent=0);
     void beAttacked(int) override;
     QString chessName() const override;
 signals:
