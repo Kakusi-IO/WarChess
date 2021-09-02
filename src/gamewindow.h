@@ -45,8 +45,8 @@ private:
     Ui::GameWindow *ui;
 
 signals:
-
     void newChessAdded();
+    void keyEscPressed();
 
 public slots:
     void callUpdate();

@@ -31,11 +31,13 @@ GameWindow::GameWindow(QWidget *parent) :
     gameController=new GameController(this);
     setStatusLabel("按下右键以放置 祖安狂人");
     ui->statusbar->addWidget(statusLabel);
+    setAttribute(Qt::WA_DeleteOnClose);
 }
 
 GameWindow::~GameWindow()
 {
     delete ui;
+    emit
 }
 
 void GameWindow::paintEvent(QPaintEvent *event)
@@ -173,6 +175,11 @@ void GameWindow::mousePressEvent(QMouseEvent *event)
 
 void GameWindow::keyPressEvent(QKeyEvent *event)
 {
+    if(event->key()==Qt::Key_Escape)
+    {
+        emit keyEscPressed();
+    }
+
     if(gameController->moved)
     {
         return; //非移动回合

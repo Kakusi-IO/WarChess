@@ -9,5 +9,7 @@ int main(int argc, char *argv[])
 //    InitWindow w;
 //    w.show();
     WindowController wc;
+//    QApplication::setQuitOnLastWindowClosed(false); //没用
     return a.exec();
+    exit(0);
 }
