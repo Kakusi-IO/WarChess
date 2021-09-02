@@ -39,6 +39,10 @@ GameWindow::~GameWindow()
     delete ui;
     emit
 }
+void GameWindow::closeEvent( QCloseEvent * event )
+{
+    exit(0);
+}
 
 void GameWindow::paintEvent(QPaintEvent *event)
 {

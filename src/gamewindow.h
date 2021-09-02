@@ -40,6 +40,7 @@ protected:
     void paintEvent(QPaintEvent* event);
     void mousePressEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent *event);
+    void closeEvent( QCloseEvent * event );
 private:
 
     Ui::GameWindow *ui;

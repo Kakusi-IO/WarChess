@@ -18,5 +18,6 @@
 #include <QCoreApplication>
 #include <QEventLoop>
 #include <algorithm>
+#include <QCloseEvent>
 
 #endif // INCLUDEDLIBS_H
