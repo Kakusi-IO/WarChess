@@ -191,7 +191,18 @@ void GameWindow::mousePressEvent(QMouseEvent *event)
                     setStatusLabel("攻击不到此目标，请重新选择");
                     return;
                 }
+
+                //攻击
                 gameController->actAttack(gameController->currentChess,chess);
+                QString recordText=gameController->currentTime()+"\t我方 "+gameController->currentChess->chessName()+" 攻击了敌方 "+
+                        chess->chessName();
+                gameController->diary << recordText;
+                if(!chess->alive)
+                {
+                    recordText=gameController->currentTime()+"\t敌方 "+chess->chessName()+" 死亡";
+                    gameController->diary << recordText;
+                }
+
                 gameController->attackActed=true;
                 return;
             }
@@ -235,10 +246,12 @@ void GameWindow::restart(int stage)
 
 void GameWindow::gameStart()
 {
+    int currentRound=0;
     ///*
     while(!(gameController->hasLost()||gameController->hasWon()))
     {
-
+        currentRound++;
+        gameController->diary << QString("第 "+QString::number(currentRound)+" 回合");
         //蓝色方
         foreach(gameController->currentChess,gameController->blueTeamChesses)
         {
@@ -246,6 +259,7 @@ void GameWindow::gameStart()
             {
                 continue;
             }
+
             //移动
             //qDebug()<<"进入第一个foreach";
             setStatusLabel("请移动 "+gameController->currentChess->chessName());
@@ -267,6 +281,7 @@ void GameWindow::gameStart()
                 }
                 while(!gameController->moved);
             }
+
             //扣血
             if(gameController->colorsOfMaps
                     [gameController->currentStage]
@@ -275,11 +290,20 @@ void GameWindow::gameStart()
             {
                 setStatusLabel(gameController->currentChess->chessName()+" 移动到了红色区域，扣除50点生命值");
                 gameController->currentChess->beAttacked(50);
+                QString recordText=gameController->currentTime()+"\t我方 "+
+                        gameController->currentChess->chessName()+" 移动到了红色区域，扣除50点生命值";
+                gameController->diary << recordText;
+                if(!gameController->currentChess->alive)
+                {
+                    recordText=gameController->currentTime()+"\t我方 "+
+                            gameController->currentChess->chessName()+" 死亡";
+                    gameController->diary << recordText;
+                }
                 wait(2000);
+
             }
 
-            //            qDebug()<<gameController->currentChess->chessName()<<" "
-            //            <<gameController->currentChess->placeIndex.x<<" "<<gameController->currentChess->placeIndex.y;
+
             //攻击
             //走到了黄色地形，不能攻击
             if(gameController->colorsOfMaps
@@ -304,10 +328,10 @@ void GameWindow::gameStart()
             gameController->attackActed=false;
             do
             {
-
                 wait(100);
             }
             while(!gameController->attackActed);
+
             //判断是否胜利
             if(gameController->hasWon())
             {
@@ -343,6 +367,13 @@ void GameWindow::gameStart()
             {
                 setStatusLabel(gameController->currentChess->chessName()+" 移动到了红色区域，扣除50点生命值");
                 gameController->currentChess->beAttacked(50);
+                QString recordText=gameController->currentTime()+"\t敌方 "+gameController->currentChess->chessName()+" 移动到了红色区域，扣除50点生命值";
+                gameController->diary << recordText;
+                if(!gameController->currentChess->alive)
+                {
+                    recordText=gameController->currentTime()+"\t敌方 "+gameController->currentChess->chessName()+" 死亡";
+                    gameController->diary << recordText;
+                }
                 wait(2000);
             }
             //攻击

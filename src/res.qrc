@@ -12,6 +12,5 @@
     <qresource prefix="/audio">
         <file>res/attackAudio.wav</file>
         <file>res/GoingOutForAncientBattle.wav</file>
-        <file>res/victory.wav</file>
     </qresource>
 </RCC>

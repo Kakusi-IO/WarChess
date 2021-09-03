@@ -12,8 +12,8 @@
 #include <QList>
 #include <QTime>
 #include <QTimer>
+#include <QDateTime>
 #include <QDebug>
-#include <windows.h>
 #include <QCoreApplication>
 #include <QEventLoop>
 #include <algorithm>

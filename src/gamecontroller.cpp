@@ -4,6 +4,7 @@ GameController::GameController(QObject *parent) : QObject(parent)
 {
     blueTeamChesses.clear();
     redTeamChesses.clear();
+    diary.clear();
     initReadTeam();
     attackSound=new QSound(":/audio/res/attackAudio.wav");
 }
@@ -219,6 +220,13 @@ void GameController::autoAttack()
 //        attackActed=true;
         Chess *targetChess=findTheNearestEnemy();
         actAttack(currentChess,targetChess);
+        QString recordText=currentTime()+"\t敌方 "+currentChess->chessName()+" 攻击了我方 "+targetChess->chessName();
+        diary << recordText;
+        if(!targetChess->alive)
+        {
+            recordText=currentTime()+"\t我方 "+targetChess->chessName()+" 死亡";
+            diary << recordText;
+        }
     }
 }
 
@@ -312,7 +320,11 @@ void GameController::restart(int stage)
     currentChess=nullptr;
     moved=true;
     attackActed=true;
-
+    diary.clear();
 }
 
-
+QString GameController::currentTime()
+{
+    QDateTime currentDateTime=QDateTime::currentDateTime();
+    return currentDateTime.toString("hh:mm:ss");
+}

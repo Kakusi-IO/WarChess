@@ -9,6 +9,7 @@
 #include "includedLibs.h"
 #include "firstlywindialog.h"
 #include "finallywindialog.h"
+#include "reviewwidget.h"
 #include <QMainWindow>
 #include <QObject>
 
@@ -21,6 +22,8 @@ class WindowController : public QObject
     LoseDialog* loseDialog;
     FirstlyWinDialog* firstlyWinDialog;
     FinallyWinDialog* finallyWinDialog;
+    ReviewWidget* reviewWidget;
+
     QSignalMapper* mapper;
 
 
@@ -28,6 +31,8 @@ class WindowController : public QObject
 public:
     WindowController();
     ~WindowController();
+public slots:
+    void requestForReview();
 private:
     void connectSignalsAndSlots();
 

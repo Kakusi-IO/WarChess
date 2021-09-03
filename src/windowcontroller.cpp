@@ -9,6 +9,7 @@
 #include "ui_losedialog.h"
 #include "ui_firstlywindialog.h"
 #include "ui_finallywindialog.h"
+#include "ui_reviewwidget.h"
 
 void WindowController::connectSignalsAndSlots()
 {
@@ -42,6 +43,11 @@ void WindowController::connectSignalsAndSlots()
     connect(finallyWinDialog->ui->restartBtn,SIGNAL(clicked()),mapper,SLOT(map()));
     mapper->setMapping(finallyWinDialog->ui->restartBtn,1);
     connect(mapper,SIGNAL(mapped(int)),gameWindow,SLOT(restart(int)));
+
+    connect(pauseDialog->ui->reviewBtn,SIGNAL(clicked()),this,SLOT(requestForReview()));
+    connect(finallyWinDialog->ui->reviewBtn,SIGNAL(clicked()),this,SLOT(requestForReview()));
+    connect(firstlyWinDialog->ui->reviewBtn,SIGNAL(clicked()),this,SLOT(requestForReview()));
+    connect(loseDialog->ui->reviewBtn,SIGNAL(clicked()),this,SLOT(requestForReview()));
 }
 
 WindowController::WindowController()
@@ -52,6 +58,8 @@ WindowController::WindowController()
     loseDialog=new LoseDialog();
     firstlyWinDialog=new FirstlyWinDialog();
     finallyWinDialog=new FinallyWinDialog();
+    reviewWidget=new ReviewWidget();
+
     mapper=new QSignalMapper(this);
     connectSignalsAndSlots();
     initWindow->show();
@@ -66,4 +74,15 @@ WindowController::~WindowController()
     delete loseDialog;
     delete firstlyWinDialog;
     delete finallyWinDialog;
+    delete reviewWidget;
+}
+
+void WindowController::requestForReview()
+{
+    QString tempText;
+    foreach(tempText,gameWindow->gameController->diary)
+    {
+        reviewWidget->ui->plainTextEdit->appendPlainText(tempText);
+    }
+    reviewWidget->show();
 }

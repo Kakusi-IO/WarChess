@@ -23,6 +23,7 @@ SOURCES += \
     main.cpp \
     initwindow.cpp \
     pausedialog.cpp \
+    reviewwidget.cpp \
     tankchess.cpp \
     windowcontroller.cpp
 
@@ -40,6 +41,7 @@ HEADERS += \
     initwindow.h \
     losedialog.h \
     pausedialog.h \
+    reviewwidget.h \
     tankchess.h \
     windowcontroller.h
 
@@ -49,7 +51,8 @@ FORMS += \
     gamewindow.ui \
     initwindow.ui \
     losedialog.ui \
-    pausedialog.ui
+    pausedialog.ui \
+    reviewwidget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

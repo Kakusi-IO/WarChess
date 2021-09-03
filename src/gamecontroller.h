@@ -15,7 +15,7 @@ class GameController : public QObject
 {
     Q_OBJECT
     friend class GameWindow;
-
+    friend class WindowController;
     QList<Chess*>blueTeamChesses;
     QList<Chess*>redTeamChesses;
     int currentStage=0; //当前的关卡数，取值为0或1
@@ -24,6 +24,7 @@ class GameController : public QObject
     bool moved=true;
     bool attackActed=true;
     QSound *attackSound;
+    QList<QString> diary;
 
     void moveChess(int);
     void actAttack(Chess*,Chess*);
@@ -40,6 +41,7 @@ class GameController : public QObject
     int signum(int);
     void initReadTeam(int stage=0);
     void restart(int stage=0);
+    QString currentTime();
 
 public:
     explicit GameController(QObject *parent = nullptr);
