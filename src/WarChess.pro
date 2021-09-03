@@ -1,5 +1,6 @@
 QT       += core gui
 RC_ICONS=W.ico
+QT       += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 # TARGET = WarChess

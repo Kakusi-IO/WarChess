@@ -23,6 +23,7 @@ class GameController : public QObject
     Chess *currentChess;
     bool moved=true;
     bool attackActed=true;
+    QSound *attackSound;
 
     void moveChess(int);
     void actAttack(Chess*,Chess*);

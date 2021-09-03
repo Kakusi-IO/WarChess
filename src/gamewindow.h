@@ -23,6 +23,8 @@ class GameWindow : public QMainWindow
     GameController* gameController;
     QLabel *statusLabel;
     QLabel *tutorialLabel;
+    QSound *gameBGM;
+
     void setStatusLabel(const QString&);
     void setInfoLabel(const QString&);
     void setTutorialLabel(const QString&);
@@ -33,6 +35,7 @@ class GameWindow : public QMainWindow
         while( QTime::currentTime() < _Timer )
             QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
     }
+
 public:
     explicit GameWindow(QWidget *parent = nullptr);
     ~GameWindow();

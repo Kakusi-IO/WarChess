@@ -1,6 +1,6 @@
 #include "gamewindow.h"
 #include "ui_gamewindow.h"
-
+#include <QTime>
 
 void GameWindow::setStatusLabel(const QString & status)
 {
@@ -21,6 +21,8 @@ void GameWindow::keyPressed(int key)
     update();
 }
 
+
+
 GameWindow::GameWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GameWindow)
@@ -40,13 +42,17 @@ GameWindow::GameWindow(QWidget *parent) :
     setTutorialLabel("W A S D 移动\tP 跳过移动\t 左键攻击");
     ui->statusbar->addWidget(tutorialLabel);
 
+    gameBGM=new QSound(":/audio/res/GoingOutForAncientBattle.wav");
+    gameBGM->setLoops(100);
+    gameBGM->play();
     setAttribute(Qt::WA_DeleteOnClose);
 }
 
 GameWindow::~GameWindow()
 {
     delete ui;
-    emit
+    gameBGM->stop();
+    delete gameBGM;
 }
 void GameWindow::closeEvent( QCloseEvent * event )
 {
@@ -368,10 +374,14 @@ void GameWindow::gameStart()
     //        tempchess->alive=false;
     //    }
     //    update();
+    gameBGM->stop();
     if(gameController->hasWon())
     {
+
+
         if(gameController->currentStage==0)
         {
+
             emit firstlyWin();
         }
         else
@@ -381,6 +391,7 @@ void GameWindow::gameStart()
     }
     if(gameController->hasLost())
     {
+
         emit lost();
     }
 

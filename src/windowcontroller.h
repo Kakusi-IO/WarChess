@@ -23,6 +23,8 @@ class WindowController : public QObject
     FinallyWinDialog* finallyWinDialog;
     QSignalMapper* mapper;
 
+
+
 public:
     WindowController();
     ~WindowController();

@@ -5,6 +5,7 @@ GameController::GameController(QObject *parent) : QObject(parent)
     blueTeamChesses.clear();
     redTeamChesses.clear();
     initReadTeam();
+    attackSound=new QSound(":/audio/res/attackAudio.wav");
 }
 
 void GameController::addChess(Chess * newChess)
@@ -118,6 +119,7 @@ void GameController::actAttack(Chess *lhs, Chess *rhs)
 
     int damage=lhs->attack();
     rhs->beAttacked(damage);
+    attackSound->play();
 //    qDebug()<<lhs->chessName()<<" 攻击了 "<<rhs->chessName();
     if(!rhs->alive)
     {

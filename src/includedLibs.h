@@ -5,7 +5,6 @@
 #include <QStatusBar>
 #include <QPainter>
 #include <QPixmap>
-#include <QPropertyAnimation>
 #include <QBrush>
 #include <QColor>
 #include <QMouseEvent>
@@ -20,5 +19,6 @@
 #include <algorithm>
 #include <QCloseEvent>
 #include <QSignalMapper>
+#include <QtMultimedia/QSound>
 
 #endif // INCLUDEDLIBS_H
