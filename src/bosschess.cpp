@@ -5,7 +5,7 @@ BossChess::BossChess(Index index,QObject *parent) : Chess(parent)
 {
     placeIndex=index;
 
-    hitPoint=3;
+    hitPoint=3000;
     attackValue=100;
     stepLength=1;
     attackDistance=1;

@@ -15,7 +15,7 @@ AssassinChess::AssassinChess(Index index, bool isEnemy, QObject *parent): Chess(
 {
     Q_UNUSED(isEnemy);
     placeIndex=index;
-    hitPoint=6;
+    hitPoint=600;
     attackValue=90;
     stepLength=2;
     attackDistance=2;
