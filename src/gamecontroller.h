@@ -5,6 +5,7 @@
 #include "tankchess.h"
 #include "assassinchess.h"
 #include "archerchess.h"
+#include "bosschess.h"
 #include "includedLibs.h"
 
 #include <QObject>
@@ -36,6 +37,8 @@ class GameController : public QObject
     Chess* findTheNearestEnemy();
     bool canBeMovedTo(Index);
     int signum(int);
+    void initReadTeam(int stage=0);
+    void restart(int stage=0);
 
 public:
     explicit GameController(QObject *parent = nullptr);
@@ -50,13 +53,13 @@ public:
             Qt::green,Qt::green,Qt::green,Qt::yellow,Qt::green,
             Qt::green,Qt::green,Qt::black,Qt::green,Qt::yellow,
         },
-        //第二关的地图 //todo：还没设计
+        //第二关的地图
         {
-            Qt::yellow,Qt::green,Qt::black,Qt::green,Qt::green,
-            Qt::green,Qt::yellow,Qt::green,Qt::green,Qt::green,
-            Qt::green,Qt::green,Qt::yellow,Qt::green,Qt::green,
-            Qt::green,Qt::green,Qt::green,Qt::yellow,Qt::green,
-            Qt::green,Qt::green,Qt::black,Qt::green,Qt::yellow,
+            Qt::red,Qt::green,Qt::green,Qt::green,Qt::red,
+            Qt::green,Qt::green,Qt::green,Qt::green,Qt::green,
+            Qt::yellow,Qt::yellow,Qt::yellow,Qt::yellow,Qt::yellow,
+            Qt::green,Qt::green,Qt::green,Qt::green,Qt::green,
+            Qt::red,Qt::green,Qt::green,Qt::green,Qt::red,
         }
     };
     int chessesPerStage[2]={3,4}; //第一关三个棋子，第二关四个棋子，可多放一个射手

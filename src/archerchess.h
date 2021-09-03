@@ -8,6 +8,7 @@ class ArcherChess : public Chess
 {
     Q_OBJECT
 public:
+
     //explicit ArcherChess(QObject *parent = nullptr);
     ArcherChess(Index,QObject* parent=nullptr);
     ArcherChess(Index,bool,QObject* parent=nullptr);

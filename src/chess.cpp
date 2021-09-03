@@ -49,9 +49,14 @@ QString Chess::info() const
     {
         returnInfo="德玛西亚之翼";
     }
+    else if(className==QString("ArcherChess"))
+    {
+
+        returnInfo="皮城女警";
+    }
     else
     {
-        returnInfo="皮城女警";
+        returnInfo="金属大师";
     }
     returnInfo+="\t生命值:";
     returnInfo+=QString::number(hitPoint);

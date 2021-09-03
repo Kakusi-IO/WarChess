@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PauseDialog</class>
- <widget class="QDialog" name="PauseDialog">
+ <class>FirstlyWinDialog</class>
+ <widget class="QDialog" name="FirstlyWinDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,18 +14,6 @@
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="1">
-    <widget class="QLabel" name="label">
-     <property name="font">
-      <font>
-       <pointsize>25</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>游戏已暂停</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0">
     <widget class="QPushButton" name="toInitBtn">
      <property name="text">
@@ -34,16 +22,35 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QPushButton" name="continueBtn">
+    <widget class="QPushButton" name="restartBtn">
      <property name="text">
-      <string>继续游戏</string>
+      <string>重新开始本关</string>
      </property>
     </widget>
    </item>
    <item row="1" column="2">
+    <widget class="QPushButton" name="toNextBtn">
+     <property name="text">
+      <string>开始下一关</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
     <widget class="QPushButton" name="exitBtn">
      <property name="text">
       <string>退出游戏</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="4">
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <pointsize>40</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>你通过了第一关</string>
      </property>
     </widget>
    </item>
@@ -52,14 +59,14 @@
  <resources/>
  <connections>
   <connection>
-   <sender>continueBtn</sender>
+   <sender>exitBtn</sender>
    <signal>clicked()</signal>
-   <receiver>PauseDialog</receiver>
+   <receiver>FirstlyWinDialog</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>200</x>
-     <y>280</y>
+     <x>339</x>
+     <y>269</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
@@ -68,14 +75,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>exitBtn</sender>
+   <sender>restartBtn</sender>
    <signal>clicked()</signal>
-   <receiver>PauseDialog</receiver>
+   <receiver>FirstlyWinDialog</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>339</x>
-     <y>280</y>
+     <x>159</x>
+     <y>269</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
@@ -86,12 +93,28 @@
   <connection>
    <sender>toInitBtn</sender>
    <signal>clicked()</signal>
-   <receiver>PauseDialog</receiver>
+   <receiver>FirstlyWinDialog</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>60</x>
-     <y>280</y>
+     <x>59</x>
+     <y>269</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toNextBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>FirstlyWinDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>249</x>
+     <y>269</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>

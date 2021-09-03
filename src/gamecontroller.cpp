@@ -4,18 +4,7 @@ GameController::GameController(QObject *parent) : QObject(parent)
 {
     blueTeamChesses.clear();
     redTeamChesses.clear();
-
-    //敌方棋子
-    Chess *newTankChess,*newAssassinChess,*newArcherChess;
-    newTankChess=new TankChess(Index(3,2),true);
-    redTeamChesses<<newTankChess;
-
-    newAssassinChess=new AssassinChess(Index(3,0),true);
-    redTeamChesses<<newAssassinChess;
-
-    newArcherChess=new ArcherChess(Index(4,0),true);
-    redTeamChesses<<newArcherChess;
-
+    initReadTeam();
 }
 
 void GameController::addChess(Chess * newChess)
@@ -26,19 +15,29 @@ void GameController::addChess(Chess * newChess)
 bool GameController::hasWon() const
 {
     Chess *tempChess;
+//    if(!redTeamChesses.isEmpty())
+//    {
+//        return false;
+//    }
     foreach(tempChess,redTeamChesses)
     {
-        if(tempChess->alive)
-        {
-            return false;
-        }
-    }
+         if(tempChess->alive)
+         {
+             return false;
+         }
+     }
+
+
     return true;
 }
 
 bool GameController::hasLost() const
 {
     Chess *tempChess;
+    if(blueTeamChesses.isEmpty())
+    {
+        return false;
+    }
     foreach(tempChess,blueTeamChesses)
     {
         if(tempChess->alive)
@@ -119,7 +118,7 @@ void GameController::actAttack(Chess *lhs, Chess *rhs)
 
     int damage=lhs->attack();
     rhs->beAttacked(damage);
-    qDebug()<<lhs->chessName()<<" 攻击了 "<<rhs->chessName();
+//    qDebug()<<lhs->chessName()<<" 攻击了 "<<rhs->chessName();
     if(!rhs->alive)
     {
         emit someoneDead();
@@ -130,11 +129,11 @@ void GameController::autoMoveChess()
 {
     if(hasEnemyToAutoAttack())
     {
-        qDebug()<<currentChess->chessName()<<" "<<"有自动攻击的目标,无需移动";
+//        qDebug()<<currentChess->chessName()<<" "<<"有自动攻击的目标,无需移动";
 //        moved=true;//跳过移动
         return;
     }
-    qDebug()<<currentChess->chessName()<<" "<<"没有自动攻击的目标";
+//    qDebug()<<currentChess->chessName()<<" "<<"没有自动攻击的目标";
      //靠近最近的敌人
     Chess *goalChess=findTheNearestEnemy();
     int deltaX=goalChess->index().x-currentChess->index().x;
@@ -145,7 +144,7 @@ void GameController::autoMoveChess()
     {
         if(canBeMovedTo(Index(currentIndex.x+signum(deltaX),currentIndex.y))) //可以x方向靠近
         {
-            qDebug()<<"x靠近";
+
             if(deltaX>0)
             {
                 currentChess->move(Qt::Key_D);
@@ -171,7 +170,7 @@ void GameController::autoMoveChess()
                 currentChess->move(Qt::Key_W);
             }
 //            moved=true;
-            qDebug()<<"y靠近";
+
             return;
         }
     }
@@ -188,7 +187,7 @@ void GameController::autoMoveChess()
                 currentChess->move(Qt::Key_D);
             }
 //            moved=true;
-            qDebug()<<"x远离";
+
             return;
         }
     }
@@ -205,7 +204,7 @@ void GameController::autoMoveChess()
                 currentChess->move(Qt::Key_S);
             }
 //            moved=true;
-            qDebug()<<"y远离";
+
             return;
         }
     }
@@ -278,6 +277,40 @@ int GameController::signum(int x)
         return -1;
     }
     return 0;
+}
+
+void GameController::initReadTeam(int stage)
+{
+    if(stage==0) //第一关
+    {
+        Chess *newTankChess,*newAssassinChess,*newArcherChess;
+        newTankChess=new TankChess(Index(3,2),true);
+        redTeamChesses<<newTankChess;
+
+        newAssassinChess=new AssassinChess(Index(3,0),true);
+        redTeamChesses<<newAssassinChess;
+
+        newArcherChess=new ArcherChess(Index(4,0),true);
+        redTeamChesses<<newArcherChess;
+    }
+    else //第二关
+    {
+        Chess *newBossChess=new BossChess(Index(2,1));
+        redTeamChesses<<newBossChess;
+    }
+}
+
+void GameController::restart(int stage)
+{
+    blueTeamChesses.clear();
+    redTeamChesses.clear();
+    initReadTeam(stage);
+    chessesHasSetted=0;
+    currentStage=stage;
+    currentChess=nullptr;
+    moved=true;
+    attackActed=true;
+
 }
 
 

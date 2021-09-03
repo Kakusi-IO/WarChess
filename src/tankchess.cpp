@@ -18,7 +18,7 @@ TankChess::TankChess(Index index, bool isEnemy, QObject *parent): Chess(parent)
     Q_UNUSED(isEnemy);
     placeIndex=index;
 
-    hitPoint=1200;
+    hitPoint=12;
     attackValue=50;
     stepLength=1;
     attackDistance=1;

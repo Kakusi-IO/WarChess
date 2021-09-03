@@ -7,5 +7,6 @@
         <file>res/mundo_enemy.png</file>
         <file>res/quinn_enemy.png</file>
         <file>res/Classic_Garen_Splash.jpg</file>
+        <file>res/Classic_Mordekaiser_Splash.png</file>
     </qresource>
 </RCC>

@@ -48,13 +48,25 @@ struct Index{
     }
 
     //棋子在蓝色半区
-    bool isValidForBlueTeam() const
+    bool isValidForGameOne() const
     {
         if(!isValid())
         {
             return false;
         }
         if(y<=x)
+        {
+            return false;
+        }
+        return true;
+    }
+    bool isValidForGameTwo() const
+    {
+        if(!isValid())
+        {
+            return false;
+        }
+        if(y<3)
         {
             return false;
         }
@@ -67,7 +79,7 @@ struct Index{
     static double distance(const Index& lhs,const Index& rhs)
     {
         double squareOfDistance=(lhs.x-rhs.x)*(lhs.x-rhs.x)+(lhs.y-rhs.y)*(lhs.y-rhs.y);
-        qDebug()<<sqrt(squareOfDistance);
+//        qDebug()<<sqrt(squareOfDistance);
         return sqrt(squareOfDistance);
     }
 };

@@ -12,9 +12,13 @@ CONFIG += c++11
 SOURCES += \
     archerchess.cpp \
     assassinchess.cpp \
+    bosschess.cpp \
     chess.cpp \
+    finallywindialog.cpp \
+    firstlywindialog.cpp \
     gamecontroller.cpp \
     gamewindow.cpp \
+    losedialog.cpp \
     main.cpp \
     initwindow.cpp \
     pausedialog.cpp \
@@ -24,19 +28,26 @@ SOURCES += \
 HEADERS += \
     archerchess.h \
     assassinchess.h \
+    bosschess.h \
     chess.h \
+    finallywindialog.h \
+    firstlywindialog.h \
     gamecontroller.h \
     gamewindow.h \
     includedLibs.h \
     index.h \
     initwindow.h \
+    losedialog.h \
     pausedialog.h \
     tankchess.h \
     windowcontroller.h
 
 FORMS += \
+    finallywindialog.ui \
+    firstlywindialog.ui \
     gamewindow.ui \
     initwindow.ui \
+    losedialog.ui \
     pausedialog.ui
 
 # Default rules for deployment.

@@ -5,6 +5,7 @@
 #include "includedLibs.h"
 #include <QObject>
 
+
 class Chess : public QObject
 {
     Q_OBJECT

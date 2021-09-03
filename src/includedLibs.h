@@ -19,5 +19,6 @@
 #include <QEventLoop>
 #include <algorithm>
 #include <QCloseEvent>
+#include <QSignalMapper>
 
 #endif // INCLUDEDLIBS_H

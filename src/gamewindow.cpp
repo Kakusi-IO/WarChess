@@ -11,7 +11,10 @@ void GameWindow::setInfoLabel(const QString & info)
 {
     ui->infoLabel->setText(info);
 }
-
+void GameWindow::setTutorialLabel(const QString & text)
+{
+    tutorialLabel->setText(text);
+}
 void GameWindow::keyPressed(int key)
 {
     gameController->moveChess(key);
@@ -23,14 +26,20 @@ GameWindow::GameWindow(QWidget *parent) :
     ui(new Ui::GameWindow)
 {
     ui->setupUi(this);
+    gameController=new GameController(this);
     setInfoLabel("欢迎来到英雄战旗!按下右键可以查看棋子信息。");
 
     //初始化状态栏
     statusLabel=new QLabel(this);
     statusLabel->setMinimumWidth(300);
-    gameController=new GameController(this);
     setStatusLabel("按下右键以放置 祖安狂人");
     ui->statusbar->addWidget(statusLabel);
+
+    tutorialLabel=new QLabel(this);
+    tutorialLabel->setMinimumWidth(300);
+    setTutorialLabel("W A S D 移动\tP 跳过移动\t 左键攻击");
+    ui->statusbar->addWidget(tutorialLabel);
+
     setAttribute(Qt::WA_DeleteOnClose);
 }
 
@@ -41,6 +50,7 @@ GameWindow::~GameWindow()
 }
 void GameWindow::closeEvent( QCloseEvent * event )
 {
+    Q_UNUSED(event);
     exit(0);
 }
 
@@ -110,20 +120,26 @@ void GameWindow::mousePressEvent(QMouseEvent *event)
         }
 
         //放置棋子
-        if(!mousePressIndex.isValidForBlueTeam() //位置超出蓝色半区地图
-                ||gameController->chessesHasSetted == gameController->chessesPerStage[gameController->currentStage] //放置完毕
+        if(gameController->chessesHasSetted == gameController->chessesPerStage[gameController->currentStage] //放置完毕
                 ||gameController->colorsOfMaps[gameController->currentStage][5*mousePressIndex.y+mousePressIndex.x] == Qt::black //位置在阻挡地形上
                 )
         {
             return;
         }
-
+        if(gameController->currentStage==0 && !mousePressIndex.isValidForGameOne())
+        {
+            return;
+        }
+        if(gameController->currentStage==1 && !mousePressIndex.isValidForGameTwo())
+        {
+            return;
+        }
         Chess* newChess;
         switch(gameController->chessesHasSetted)
         {
         case 0: //放第一个
             newChess=new TankChess(mousePressIndex);
-//            qDebug()<<newChess->metaObject()->className();
+            //            qDebug()<<newChess->metaObject()->className();
             setStatusLabel("按下右键以放置 德玛西亚之翼");
             break;
         case 1: //放第二个
@@ -132,12 +148,12 @@ void GameWindow::mousePressEvent(QMouseEvent *event)
             break;
         case 2: //放第三个
             newChess=new ArcherChess(mousePressIndex);
-//            setStatusLabel("按下右键以放置 皮城女警");
+            //            setStatusLabel("按下右键以放置 皮城女警");
             break;
-//        default:
-//            newChess=new ArcherChess(mousePressIndex);
-//            setStatusLabel("");
-//            break;
+        default:
+            newChess=new ArcherChess(mousePressIndex);
+            setStatusLabel("");
+            break;
         }
         gameController->addChess(newChess);
 
@@ -201,8 +217,19 @@ void GameWindow::callUpdate()
     update();
 }
 
+void GameWindow::restart(int stage)
+{
+    //清空游戏单位，重绘地图，重设上下标签
+    gameController->restart(stage);
+    update();
+    setStatusLabel("按下右键以放置 祖安狂人");
+    setInfoLabel("欢迎来到英雄战旗!按下右键可以查看棋子信息。");
+
+}
+
 void GameWindow::gameStart()
 {
+    ///*
     while(!(gameController->hasLost()||gameController->hasWon()))
     {
 
@@ -234,9 +261,19 @@ void GameWindow::gameStart()
                 }
                 while(!gameController->moved);
             }
+            //扣血
+            if(gameController->colorsOfMaps
+                    [gameController->currentStage]
+                    [gameController->currentChess->index().x+gameController->currentChess->index().y*5] == Qt::red
+                    )
+            {
+                setStatusLabel(gameController->currentChess->chessName()+" 移动到了红色区域，扣除50点生命值");
+                gameController->currentChess->beAttacked(50);
+                wait(2000);
+            }
 
-//            qDebug()<<gameController->currentChess->chessName()<<" "
-//            <<gameController->currentChess->placeIndex.x<<" "<<gameController->currentChess->placeIndex.y;
+            //            qDebug()<<gameController->currentChess->chessName()<<" "
+            //            <<gameController->currentChess->placeIndex.x<<" "<<gameController->currentChess->placeIndex.y;
             //攻击
             //走到了黄色地形，不能攻击
             if(gameController->colorsOfMaps
@@ -265,6 +302,11 @@ void GameWindow::gameStart()
                 wait(100);
             }
             while(!gameController->attackActed);
+            //判断是否胜利
+            if(gameController->hasWon())
+            {
+                break;
+            }
 
         }
 
@@ -287,7 +329,16 @@ void GameWindow::gameStart()
                 gameController->autoMoveChess();
                 update();
             }
-
+            //扣血
+            if(gameController->colorsOfMaps
+                    [gameController->currentStage]
+                    [gameController->currentChess->index().x+gameController->currentChess->index().y*5] == Qt::red
+                    )
+            {
+                setStatusLabel(gameController->currentChess->chessName()+" 移动到了红色区域，扣除50点生命值");
+                gameController->currentChess->beAttacked(50);
+                wait(2000);
+            }
             //攻击
             if(gameController->colorsOfMaps
                     [gameController->currentStage]
@@ -301,15 +352,36 @@ void GameWindow::gameStart()
             setStatusLabel(gameController->currentChess->chessName()+" 正在攻击");
             wait(2000);
             gameController->autoAttack();
-//            update();
+            //            update();
+            //判断是否失败
+            if(gameController->hasLost())
+            {
+                break;
+            }
         }
     }
+    //*/
+
+    //    Chess *tempchess;
+    //    foreach(tempchess,gameController->redTeamChesses)
+    //    {
+    //        tempchess->alive=false;
+    //    }
+    //    update();
     if(gameController->hasWon())
     {
-        //todo
+        if(gameController->currentStage==0)
+        {
+            emit firstlyWin();
+        }
+        else
+        {
+            emit finallyWin();
+        }
     }
     if(gameController->hasLost())
     {
-        //todo
+        emit lost();
     }
+
 }

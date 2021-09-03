@@ -5,6 +5,10 @@
 #include "gamewindow.h"
 #include "gamecontroller.h"
 #include "pausedialog.h"
+#include "losedialog.h"
+#include "includedLibs.h"
+#include "firstlywindialog.h"
+#include "finallywindialog.h"
 #include <QMainWindow>
 #include <QObject>
 
@@ -14,6 +18,10 @@ class WindowController : public QObject
     InitWindow* initWindow;
     GameWindow* gameWindow;
     PauseDialog* pauseDialog;
+    LoseDialog* loseDialog;
+    FirstlyWinDialog* firstlyWinDialog;
+    FinallyWinDialog* finallyWinDialog;
+    QSignalMapper* mapper;
 
 public:
     WindowController();

@@ -2,6 +2,7 @@
 
 ArcherChess::ArcherChess(Index index, QObject *parent) : Chess(parent)
 {
+
     placeIndex=index;
     hitPoint=500;
     attackValue=70;
@@ -14,7 +15,7 @@ ArcherChess::ArcherChess(Index index, bool isEnemy, QObject *parent): Chess(pare
 {
     Q_UNUSED(isEnemy);
     placeIndex=index;
-    hitPoint=500;
+    hitPoint=5;
     attackValue=70;
     stepLength=1;
     attackDistance=3;
